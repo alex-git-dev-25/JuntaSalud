@@ -9,9 +9,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,11 +45,13 @@ public class Cita {
 	@Column(length=10, nullable = false)
 	private String consultorioCita;
 	
-	@Column(length=80)
-	private String lugar;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idEstablecimiento", nullable=false)
+	private Establecimiento establecimiento;
 	
-	@Column(length=50)
-	private String especialidad;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idEspecialidad", nullable=false)
+	private Especialidad especialidad;
 	
 	@Column(length=60)
 	private String nombreMedico;
