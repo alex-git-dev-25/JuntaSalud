@@ -1,4 +1,4 @@
-package com.juntasalud.start.one;
+package com.juntasalud.citasmedicas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

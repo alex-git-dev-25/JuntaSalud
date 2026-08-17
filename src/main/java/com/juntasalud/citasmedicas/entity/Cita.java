@@ -1,4 +1,4 @@
-package com.juntasalud.start.one.entity;
+package com.juntasalud.citasmedicas.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
