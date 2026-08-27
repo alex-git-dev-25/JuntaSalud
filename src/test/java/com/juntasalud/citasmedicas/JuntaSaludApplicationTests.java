@@ -1,4 +1,4 @@
-package com.juntasalud.start.one;
+package com.juntasalud.citasmedicas;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
