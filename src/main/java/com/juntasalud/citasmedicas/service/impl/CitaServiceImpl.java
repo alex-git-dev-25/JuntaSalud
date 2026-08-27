@@ -1,6 +1,8 @@
 package com.juntasalud.citasmedicas.service.impl;
 
+import java.time.Clock;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -14,33 +16,38 @@ import com.juntasalud.citasmedicas.service.CitaService;
 @Service
 public class CitaServiceImpl implements CitaService{
 
-	private final CitaRepository repo;
+	private final Clock horaZona;
+	private final CitaRepository citaRepo;
 	
-	public CitaServiceImpl(CitaRepository repo) {
-		this.repo=repo;
+	public CitaServiceImpl(CitaRepository citaRepo, Clock horaZona) {
+		this.citaRepo=citaRepo;
+		this.horaZona=horaZona;
 	}
 	
 	@Override
 	public List<Cita> listarCitas() {
-		return repo.findAll();
+		return citaRepo.findAll();
 	}
-
+	
 	@Override
 	public List<Cita> buscarPorEspecialidad(String nombreEspecialidad) {
-		return repo.findByEspecialidad_NomEspecialidadContainingIgnoreCase(nombreEspecialidad);
+		return citaRepo.findByEspecialidad_NomEspecialidadContainingIgnoreCase(nombreEspecialidad);
 	}
 
 	@Override
 	public List<Cita> listarProximasCitas() {
-		LocalDate hoy=LocalDate.now();
-		LocalTime ahora=LocalTime.now();
+		LocalDateTime fechaHoraActual=LocalDateTime.now(horaZona);
+	
+		LocalDate fechaActual=fechaHoraActual.toLocalDate();
+		LocalTime horaActual=fechaHoraActual.toLocalTime();
+		
 		List<EstadoCita> estadosProximos = List.of(EstadoCita.PENDIENTE, EstadoCita.REPROGRAMADA);
-		return repo.listarProximasCitasQuery(hoy, ahora, estadosProximos);
+		return citaRepo.listarProximasCitasQuery(fechaActual, horaActual, estadosProximos);
 	}
 
 	@Override
 	public List<Cita> buscarPorEstablecimiento(String nombreEstablecimiento) {
-		return repo.findByEstablecimiento_NombreEstablecimientoContainingIgnoreCase(nombreEstablecimiento);
+		return citaRepo.findByEstablecimiento_NombreEstablecimientoContainingIgnoreCase(nombreEstablecimiento);
 	}
 
 }
