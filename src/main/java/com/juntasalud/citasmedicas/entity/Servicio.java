@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tb_tipo_cita")
+@Table(name = "tb_servicio")
 @Getter
 @Setter
 @NoArgsConstructor
-public class TipoCita {
+public class Servicio {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long idTipoCita;
+	private Long idServicio;
 	
 	@Column(length=50, nullable=false)
-	private String nombreTipoCita;
+	private String nombreServicio;
 	
 }

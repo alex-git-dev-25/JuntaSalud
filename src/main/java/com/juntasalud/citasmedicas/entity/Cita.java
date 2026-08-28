@@ -5,6 +5,8 @@ import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.juntasalud.citasmedicas.enums.EstadoCita;
+import com.juntasalud.citasmedicas.enums.MedioVirtual;
+import com.juntasalud.citasmedicas.enums.ModalidadCita;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,27 +46,33 @@ public class Cita {
 	private String consultorioCita;
 	
 	@Column(length=20)
-	private String nroActomedico;
+	private String nroActoMedico;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idEstablecimiento", nullable=false)
+	@JoinColumn(name="idEstablecimiento")
 	private Establecimiento establecimiento;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idEspecialidad", nullable=false)
+	@JoinColumn(name="idEspecialidad")
 	private Especialidad especialidad;
 	
 	@Column(length=60)
-	private String nombreMedico;
+	private String medico;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="idTipoCita", nullable=false)
-	private TipoCita tipoCita; 
+	@JoinColumn(name="idServicio", nullable=false)
+	private Servicio servicio; 
+	
+	@Enumerated(EnumType.STRING)
+	@Column(length=20, nullable=false)
+	private ModalidadCita modalidad;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(length=20)
+	private MedioVirtual medioVirtual;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(length=20, nullable=false)
 	private EstadoCita estado;
-	
-	
 	
 }
