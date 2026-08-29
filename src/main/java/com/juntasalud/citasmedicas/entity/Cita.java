@@ -67,6 +67,9 @@ public class Cita {
 	@Column(length=20, nullable=false)
 	private ModalidadCita modalidad;
 	
+	@Column(length=160)
+	private String direccion;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(length=20)
 	private MedioVirtual medioVirtual;
