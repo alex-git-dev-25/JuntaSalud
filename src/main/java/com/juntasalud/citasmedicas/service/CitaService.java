@@ -2,16 +2,16 @@ package com.juntasalud.citasmedicas.service;
 
 import java.util.List;
 
-import com.juntasalud.citasmedicas.entity.Cita;
+import com.juntasalud.citasmedicas.dto.CitaResponseDTO;
 
 public interface CitaService {
 	
-	List<Cita> listarCitas();
+	List<CitaResponseDTO> listarCitas();
 	
-	List<Cita> buscarPorEspecialidad(String nombreEspecialidad);
+	List<CitaResponseDTO> buscarPorEspecialidad(String nombreEspecialidad);
 	
-	List<Cita> listarProximasCitas();
+	List<CitaResponseDTO> listarProximasCitas();
 	
-	List<Cita> buscarPorEstablecimiento(String nombreEstablecimiento);
+	List<CitaResponseDTO> buscarPorEstablecimiento(String nombreEstablecimiento);
 	
 }
