@@ -14,18 +14,22 @@ public class CitaMapper {
 		dto.setIdCita(cita.getIdCita());
 		dto.setFecha(cita.getFechaCita());
 		dto.setHora(cita.getHoraCita());
+		dto.setServicio(cita.getServicio().getNombreServicio());
+		dto.setModalidad(cita.getModalidad());
+		dto.setEstado(cita.getEstado());
 		dto.setNroActoMedico(cita.getNroActoMedico());
 		
-		dto.setLugar(cita.getEstablecimiento().getNombreEstablecimiento());
+		dto.setLugar(cita.getEstablecimiento() != null
+				? cita.getEstablecimiento().getNombreEstablecimiento()
+				: null);
 		dto.setConsultorio(cita.getConsultorioCita());
 		dto.setDireccion(cita.getDireccion());
-		dto.setEspecialidad(cita.getEspecialidad().getNomEspecialidad());
-		dto.setMedico(cita.getMedico());
-		dto.setServicio(cita.getServicio().getNombreServicio());
 		
-		dto.setModalidad(cita.getModalidad());
 		dto.setMedioVirtual(cita.getMedioVirtual());
-		dto.setEstado(cita.getEstado());
+		dto.setEspecialidad(cita.getEspecialidad() != null
+				? cita.getEspecialidad().getNomEspecialidad()
+				:null);
+		dto.setMedico(cita.getMedico());
 		
 		return dto;
 	}
