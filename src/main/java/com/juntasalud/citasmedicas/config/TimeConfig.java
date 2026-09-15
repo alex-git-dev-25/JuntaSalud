@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class TimeConfig {
 	
 	@Bean
-	public Clock horaZona() {
+	Clock horaZona() {
 		return Clock.system(ZoneId.of("America/Lima"));
 	}
 }
