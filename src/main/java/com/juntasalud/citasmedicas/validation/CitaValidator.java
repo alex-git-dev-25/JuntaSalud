@@ -29,7 +29,7 @@ public class CitaValidator {
 			boolean datosVacios = especialidad == null && (medico == null || medico.isBlank());
 			if (!datosVacios) {
 				throw new ReglaNegocioException(
-						"El servicio '" + servicio.getNombreServicio() + "' no permite especialidad ni medico.");
+						"El servicio '" + servicio.getNombreServicio() + "' no necesita especialidad ni medico.");
 			}
 		}
 	}
@@ -50,7 +50,7 @@ public class CitaValidator {
 				}
 			}
 			case DOMICILIO -> {
-				boolean ubicacionValida = establecimiento == null && (direccion == null || direccion.isBlank()) && medioVirtual == null;
+				boolean ubicacionValida = establecimiento == null && direccion != null && !direccion.isBlank() && medioVirtual == null;
 				if(!ubicacionValida) {
 					throw new ReglaNegocioException("La modalidad A DOMICILIO debe tener direccion, sin establecimiento ni medio virtual.");
 				}
