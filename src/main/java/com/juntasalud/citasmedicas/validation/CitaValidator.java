@@ -14,7 +14,7 @@ public class CitaValidator {
 	public void validarServicioModalidad(Servicio servicio, ModalidadCita modalidad) {
 		if (!servicio.getModalidadesPermitidas().contains(modalidad)) {
 			throw new ReglaNegocioException(
-					"El servicio '" + servicio.getNombreServicio() + "' no permite la modalidad." + modalidad);
+					"El servicio '" + servicio.getNombreServicio() + "' no permite la modalidad " + modalidad+".");
 		}
 	}
 

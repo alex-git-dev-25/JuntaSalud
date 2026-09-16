@@ -2,11 +2,16 @@ package com.juntasalud.citasmedicas.mapper;
 
 import org.springframework.stereotype.Component;
 
+import com.juntasalud.citasmedicas.dto.CitaRequestDTO;
 import com.juntasalud.citasmedicas.dto.CitaResponseDTO;
 import com.juntasalud.citasmedicas.entity.Cita;
+import com.juntasalud.citasmedicas.entity.Especialidad;
+import com.juntasalud.citasmedicas.entity.Establecimiento;
+import com.juntasalud.citasmedicas.entity.Servicio;
 
 @Component
 public class CitaMapper {
+	
 	public CitaResponseDTO toResponseDTO(Cita cita) {
 		
 		CitaResponseDTO dto = new CitaResponseDTO();
@@ -32,5 +37,22 @@ public class CitaMapper {
 		dto.setMedico(cita.getMedico());
 		
 		return dto;
+	}
+	
+	public Cita toEntity(CitaRequestDTO request, Servicio servicio, 
+							Establecimiento establecimiento, Especialidad especialidad) {
+		Cita cita = new Cita();
+		cita.setFechaCita(request.getFecha());
+		cita.setHoraCita(request.getHora());
+		cita.setConsultorioCita(request.getConsultorio());
+		cita.setNroActoMedico(request.getNroActoMedico());
+		cita.setEstablecimiento(establecimiento);
+		cita.setEspecialidad(especialidad);
+		cita.setMedico(request.getMedico());
+		cita.setServicio(servicio);
+		cita.setModalidad(request.getModalidad());
+		cita.setDireccion(request.getDireccion());
+		cita.setMedioVirtual(request.getMedioVirtual());
+		return cita;
 	}
 }
