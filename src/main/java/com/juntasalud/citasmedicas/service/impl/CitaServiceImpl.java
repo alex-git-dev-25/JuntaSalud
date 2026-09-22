@@ -78,6 +78,11 @@ public class CitaServiceImpl implements CitaService {
 		return citaRepo.findByEstablecimiento_NombreEstablecimientoContainingIgnoreCase(nombreEstablecimiento).stream()
 				.map(citaMapper::toResponseDTO).toList();
 	}
+	
+	@Override
+	public CitaResponseDTO buscarPorId(Long id) {
+		return citaRepo.findById(id).map(citaMapper::toResponseDTO).orElseThrow(() -> new ResourceNotFoundException("Cita no encontrada"));
+	}
 
 	@Transactional
 	@Override
@@ -123,4 +128,5 @@ public class CitaServiceImpl implements CitaService {
 		// 10. RETORNAR LA CITA COMO DTO
 		return citaMapper.toResponseDTO(citaGuardada);
 	}
+
 }

@@ -15,6 +15,8 @@ public interface CitaService {
 	
 	List<CitaResponseDTO> buscarPorEstablecimiento(String nombreEstablecimiento);
 	
+	CitaResponseDTO buscarPorId(Long id);
+	
 	CitaResponseDTO registrarCita(CitaRequestDTO request);
 	
 }
