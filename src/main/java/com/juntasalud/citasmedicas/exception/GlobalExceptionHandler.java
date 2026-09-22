@@ -1,5 +1,6 @@
 package com.juntasalud.citasmedicas.exception;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -27,8 +28,10 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<String, String>> handleValidation(MethodArgumentNotValidException ex) {
-		String mensaje = ex.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", mensaje));
+		Map<String, String> errores = new HashMap<>();
+
+		ex.getBindingResult().getFieldErrors().forEach(error -> errores.put(error.getField(), error.getDefaultMessage()));
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errores);
 	}
 
 	@ExceptionHandler(Exception.class)

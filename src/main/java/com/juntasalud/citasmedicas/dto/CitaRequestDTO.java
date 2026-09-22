@@ -16,20 +16,20 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CitaRequestDTO {
 	
-	@NotNull
+	@NotNull(message="La fecha es obligatoria")
 	private LocalDate fecha;
-	@NotNull
+	@NotNull(message="La hora es obligatoria")
 	private LocalTime hora;
 	private String nroActoMedico;
 
 	private Long establecimientoCod;
 	private Long especialidadCod;
-	@NotNull
+	@NotNull(message="El servicio es obligatorio")
 	private Long servicioCod;
 	
 	private String consultorio;
 	private String medico;
-	@NotNull
+	@NotNull(message="La modalidad es obligatoria")
 	private ModalidadCita modalidad;
 	private String direccion;
 	private MedioVirtual medioVirtual;
