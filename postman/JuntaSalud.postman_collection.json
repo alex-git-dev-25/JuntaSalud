@@ -1,0 +1,162 @@
+{
+  "info": {
+    "name": "JuntaSalud API",
+    "description": "Coleccion de pruebas para la API de Citas Medicas. Requiere que la base de datos tenga cargados los datos de prueba (ver v1-datos-prueba-citas.sql en el repositorio) antes de ejecutar estos requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" }
+  ],
+  "item": [
+    {
+      "name": "GET - Consultas",
+      "item": [
+        {
+          "name": "1. Listar todas las citas (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/citas", "host": ["{{baseUrl}}"], "path": ["api", "citas"] }
+          }
+        },
+        {
+          "name": "2. Filtrar por especialidad (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/citas?especialidad=cardio",
+              "host": ["{{baseUrl}}"], "path": ["api", "citas"],
+              "query": [{ "key": "especialidad", "value": "cardio" }]
+            }
+          }
+        },
+        {
+          "name": "3. Filtrar por establecimiento (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/citas?establecimiento=centro",
+              "host": ["{{baseUrl}}"], "path": ["api", "citas"],
+              "query": [{ "key": "establecimiento", "value": "centro" }]
+            }
+          }
+        },
+        {
+          "name": "4. Proximas citas (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/citas/proximas", "host": ["{{baseUrl}}"], "path": ["api", "citas", "proximas"] }
+          }
+        },
+        {
+          "name": "5. Buscar por ID existente (200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/citas/1", "host": ["{{baseUrl}}"], "path": ["api", "citas", "1"] }
+          }
+        },
+        {
+          "name": "6. Buscar por ID inexistente (404 esperado)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/api/citas/9999", "host": ["{{baseUrl}}"], "path": ["api", "citas", "9999"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST - Registro",
+      "item": [
+        {
+          "name": "7. Registrar cita PRESENCIAL valida (201 esperado)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-11-10\",\n  \"hora\": \"09:00:00\",\n  \"nroActoMedico\": \"AM-011\",\n  \"establecimientoCod\": 2,\n  \"especialidadCod\": 1,\n  \"servicioCod\": 1,\n  \"consultorio\": \"101A\",\n  \"medico\": \"Carlos Ramirez Soto\",\n  \"modalidad\": \"PRESENCIAL\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/citas", "host": ["{{baseUrl}}"], "path": ["api", "citas"] }
+          }
+        },
+        {
+          "name": "8. Registrar cita VIRTUAL valida (201 esperado)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-11-11\",\n  \"hora\": \"10:30:00\",\n  \"nroActoMedico\": \"AM-012\",\n  \"especialidadCod\": 3,\n  \"servicioCod\": 2,\n  \"medico\": \"Lucia Fernandez Vega\",\n  \"modalidad\": \"VIRTUAL\",\n  \"medioVirtual\": \"VIDEOLLAMADA\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/citas", "host": ["{{baseUrl}}"], "path": ["api", "citas"] }
+          }
+        },
+        {
+          "name": "9. Registrar cita DOMICILIO valida (201 esperado)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-11-12\",\n  \"hora\": \"14:00:00\",\n  \"nroActoMedico\": \"AM-013\",\n  \"especialidadCod\": 1,\n  \"servicioCod\": 1,\n  \"medico\": \"Jose Torres Medina\",\n  \"modalidad\": \"DOMICILIO\",\n  \"direccion\": \"Av. 123\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/citas", "host": ["{{baseUrl}}"], "path": ["api", "citas"] }
+          }
+        },
+        {
+          "name": "10. Falta servicioCod (400 esperado)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-11-13\",\n  \"hora\": \"09:00:00\",\n  \"establecimientoCod\": 1,\n  \"modalidad\": \"PRESENCIAL\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/citas", "host": ["{{baseUrl}}"], "path": ["api", "citas"] }
+          }
+        },
+        {
+          "name": "11. Servicio no permite la modalidad (409 esperado)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-11-14\",\n  \"hora\": \"08:00:00\",\n  \"servicioCod\": 3,\n  \"modalidad\": \"VIRTUAL\",\n  \"medioVirtual\": \"TELEFONO\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/citas", "host": ["{{baseUrl}}"], "path": ["api", "citas"] }
+          }
+        },
+        {
+          "name": "12. PRESENCIAL sin establecimiento (409 esperado)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-11-15\",\n  \"hora\": \"09:45:00\",\n  \"especialidadCod\": 2,\n  \"servicioCod\": 1,\n  \"medico\": \"Mariana Rios Castillo\",\n  \"modalidad\": \"PRESENCIAL\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/citas", "host": ["{{baseUrl}}"], "path": ["api", "citas"] }
+          }
+        },
+        {
+          "name": "13. Servicio inexistente (404 esperado)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fecha\": \"2026-11-16\",\n  \"hora\": \"11:00:00\",\n  \"establecimientoCod\": 1,\n  \"servicioCod\": 9999,\n  \"modalidad\": \"PRESENCIAL\"\n}"
+            },
+            "url": { "raw": "{{baseUrl}}/api/citas", "host": ["{{baseUrl}}"], "path": ["api", "citas"] }
+          }
+        }
+      ]
+    }
+  ]
+}
