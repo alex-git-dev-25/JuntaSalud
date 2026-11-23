@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.juntasalud.citasmedicas.entity.Especialidad;
 import com.juntasalud.citasmedicas.entity.Establecimiento;
 import com.juntasalud.citasmedicas.entity.Servicio;
+import com.juntasalud.citasmedicas.enums.EstadoCita;
 import com.juntasalud.citasmedicas.enums.MedioVirtual;
 import com.juntasalud.citasmedicas.enums.ModalidadCita;
 import com.juntasalud.citasmedicas.exception.ReglaNegocioException;
@@ -55,6 +56,13 @@ public class CitaValidator {
 					throw new ReglaNegocioException("La modalidad A DOMICILIO debe tener direccion, sin establecimiento ni medio virtual.");
 				}
 			}
+		}
+	}
+	
+	public void validarEstadoModificable(EstadoCita estadoActual) {
+		boolean modificable = estadoActual == EstadoCita.PENDIENTE || estadoActual == EstadoCita.REPROGRAMADA;
+		if (!modificable) {
+			throw new ReglaNegocioException("No se puede modificar una cita en estado " + estadoActual);
 		}
 	}
 }

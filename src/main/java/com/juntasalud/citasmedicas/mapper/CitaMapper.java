@@ -55,4 +55,20 @@ public class CitaMapper {
 		cita.setMedioVirtual(request.getMedioVirtual());
 		return cita;
 	}
+	
+	public void actualizarEntity(Cita cita, CitaRequestDTO request, Servicio servicio, 
+							Establecimiento establecimiento, Especialidad especialidad) {
+		cita.setFechaCita(request.getFecha());
+		cita.setHoraCita(request.getHora());
+		cita.setConsultorioCita(request.getConsultorio());
+		cita.setNroActoMedico(request.getNroActoMedico());
+		cita.setEstablecimiento(establecimiento);
+		cita.setEspecialidad(especialidad);
+		cita.setMedico(request.getMedico());
+		cita.setServicio(servicio);
+		cita.setModalidad(request.getModalidad());
+		cita.setDireccion(request.getDireccion());
+		cita.setMedioVirtual(request.getMedioVirtual());
+	}
+	
 }
