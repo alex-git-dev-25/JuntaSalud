@@ -5,8 +5,10 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,4 +60,15 @@ public class CitaController {
 				.buildAndExpand(nuevaCita.getIdCita()).toUri();
 		return ResponseEntity.created(ubicacion).body(nuevaCita);
 	}
+	
+	@PutMapping("/{id}")
+	public CitaResponseDTO actualizarCita(@PathVariable Long id, @Valid @RequestBody CitaRequestDTO request) {
+		return citaService.actualizarCita(id, request);
+	}
+	
+	@PatchMapping("/{id}/cancelar")
+	public CitaResponseDTO cancelarCita(@PathVariable Long id) {
+		return citaService.cancelarCita(id);
+	}
+	
 }

@@ -19,4 +19,8 @@ public interface CitaService {
 	
 	CitaResponseDTO registrarCita(CitaRequestDTO request);
 	
+	CitaResponseDTO actualizarCita(Long id, CitaRequestDTO request);
+	
+	CitaResponseDTO cancelarCita(Long id);
+	
 }

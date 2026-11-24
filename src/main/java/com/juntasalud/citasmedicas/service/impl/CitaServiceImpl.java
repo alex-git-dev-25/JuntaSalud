@@ -129,4 +129,39 @@ public class CitaServiceImpl implements CitaService {
 		return citaMapper.toResponseDTO(citaGuardada);
 	}
 
+	@Transactional
+	@Override
+	public CitaResponseDTO actualizarCita(Long id, CitaRequestDTO request) {
+		Cita cita = citaRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Cita no encontrada"));
+		citaValidator.validarEstadoModificable(cita.getEstado());
+		Servicio servicio = servicioRepo.findById(request.getServicioCod())
+				.orElseThrow(() -> new ResourceNotFoundException("Servicio no encontrado"));
+		Establecimiento establecimiento = request.getEstablecimientoCod() != null
+				? establecimientoRepo.findById(request.getEstablecimientoCod())
+					.orElseThrow(() -> new ResourceNotFoundException("Establecimiento no encontrado"))
+				: null;
+		Especialidad especialidad = request.getEspecialidadCod() != null
+				? especialidadRepo.findById(request.getEspecialidadCod())
+					.orElseThrow(() -> new ResourceNotFoundException("Especialidad no encontrada"))
+				: null;
+		citaValidator.validarServicioModalidad(servicio, request.getModalidad());
+		citaValidator.validarEspecialidadYMedico(servicio, especialidad, request.getMedico());
+		citaValidator.validarUbicacionSegunModalidad(request.getModalidad(), establecimiento, request.getDireccion(), request.getMedioVirtual());
+				
+		citaMapper.actualizarEntity(cita, request, servicio, establecimiento, especialidad);
+		return citaMapper.toResponseDTO(cita);
+	}
+
+	@Transactional
+	@Override
+	public CitaResponseDTO cancelarCita(Long id) {
+		Cita cita = citaRepo.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Cita no encontrada"));
+		citaValidator.validarEstadoModificable(cita.getEstado());
+		cita.setEstado(EstadoCita.CANCELADA);
+		
+		return citaMapper.toResponseDTO(cita);
+	}
+
 }
